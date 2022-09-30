@@ -28,7 +28,7 @@ export function Product(props: ProductProps) {
         >
           {showDetails ? 'Hide Description' : 'Show Description'}
         </button>
-        <button className={'btn'} onClick={() => add(props.product.id)}>
+        <button className={'btn'} onClick={() => add(props.product)}>
           Add To Card
         </button>
       </div>

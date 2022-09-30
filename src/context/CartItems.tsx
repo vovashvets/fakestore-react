@@ -1,9 +1,10 @@
 import React, {createContext, useState} from "react";
 import Cookies from "universal-cookie";
+import {ProductsProps} from "../hooks/products";
 
 interface CartItems {
   items: []
-  add: (id: number) => void
+  add: (product: {}) => void
   remove: (id: number) => void
 }
 
@@ -22,22 +23,31 @@ export const CartItemsContext = createContext<CartItems>({
 
 export const CartItemsState = ({children}: {children:React.ReactNode}) => {
   const [items, setItems] = useState<[]>(currentList);
+  const cookies = new Cookies();
+  let date = new Date();
+  date.setTime(date.getTime() + (60*60*1000)); // +1 hour
 
-  const add = (id: number) => {
-    const cookies = new Cookies();
+  const add = (product: {}) => {
     let currentList = typeof cookies.get('cartProducts') === 'undefined'
       ? []
       : cookies.get('cartProducts');
-    currentList.push(id);
+    currentList.push(product);
 
-    let date = new Date();
-    date.setTime(date.getTime() + (60*60*1000)); // +1 hour
+
     cookies.set('cartProducts', currentList, { path: '/', expires: date});
     setItems(currentList);
   }
 
-  const remove = () => {
+  const remove = (id: number) => {
+    let currentList = cookies.get('cartProducts');
+    const arr = [{id: 1}, {id: 3}, {id: 5}];
 
+    const newArr = currentList.filter((object: ProductsProps) => {
+      return object.id !== id;
+    });
+
+    cookies.set('cartProducts', newArr, { path: '/', expires: date});
+    setItems(newArr)
   }
 
   return (

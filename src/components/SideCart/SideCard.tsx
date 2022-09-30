@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import './SideCard.css';
 import {CartItemsContext} from "../../context/CartItems";
-import {useProducts} from "../../hooks/products";
+import {ProductsProps} from "../../hooks/products";
 
 interface SideCardProps {
   handleClose: () => void
@@ -9,18 +9,45 @@ interface SideCardProps {
 
 export function SideCard({ handleClose }: SideCardProps) {
   const {items, remove} = useContext(CartItemsContext);
-  const {products, loading} = useProducts();
 
-  function ttt() {
-    console.log(products)
+  function getTotal(){
+    let total = 0;
+    items?.forEach((product: ProductsProps) => {
+      total += product.price;
+    })
+
+    return total;
   }
-  ttt()
 
   return (
     <div className='side-card'>
-      <button onClick={handleClose}>X</button>
+      <button className='close-button' onClick={handleClose}>X</button>
 
+      {items.length !== 0 ? (
+        <table>
+          <tbody>
+          <tr>
+            <th>#</th>
+            <th>Image</th>
+            <th>Title</th>
+            <th>Price</th>
+            <th></th>
+          </tr>
+          {items.map((product: ProductsProps, index) => (
+            <tr key={index}>
+              <td>{index + 1}</td>
+              <td><img className='cart-product-image' src={product.image} alt={product.title}/></td>
+              <td>{product.title}</td>
+              <td>${product.price}</td>
+              <td><button className='remove-button' onClick={() => remove(product.id)}>Remove</button></td>
+            </tr>
+          ))}
+          </tbody>
+        </table>
+      ) : <h3>Empty Cart</h3> }
 
+      <div className='cart-total'><b>Total:</b> ${getTotal()}</div>
+      <button className='purchase-button'>Purchase</button>
     </div>
   )
 }
