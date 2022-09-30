@@ -1,25 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
+import {Header} from "./components/Header/Header";
+import {ProductsContainer} from "./components/ProductList/ProductsList";
+import {Sidebar} from "./components/Sidebar/Sidebar";
+import {Footer} from "./components/Footer/Footer";
 import './App.css';
+import {CartItemsState} from "./context/CartItems";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <CartItemsState>
+      <div className='main-container'>
+        <div className='header'>
+          <Header />
+        </div>
+        <div className='filters'>
+          <Sidebar />
+        </div>
+        <div className='main-section'>
+          <ProductsContainer />
+        </div>
+        <div className='footer'>
+          <Footer />
+        </div>
+      </div>
+    </CartItemsState>
   );
 }
 
