@@ -10,6 +10,15 @@ th, td {
     padding: 15px;
 }
 
+a {
+    text-decoration: none;
+    color: #343434;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
 .btn {
     margin: 20px 5px 0;
     padding: 5px;
@@ -29,7 +38,7 @@ th, td {
 
 .main-container{
     display: grid;
-    grid-template-columns: 1fr 4fr;
+    grid-template-columns: 1fr 5fr;
     grid-template-rows: auto;
     grid-template-areas:
     "header header"
@@ -47,8 +56,21 @@ th, td {
 
 .main-section {
     grid-area: main;
+    min-height: 80vh;
+    padding: 0 5%;
 }
 
 .footer {
     grid-area: footer;
+}
+
+.MuiCircularProgress-root {
+    margin-left: 35vw;
+    margin-top: 35vh;
+}
+
+.MuiPagination-root {
+    display: flex;
+    justify-content: center;
+    padding: 30px;
 }

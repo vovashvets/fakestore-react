@@ -1,29 +1,19 @@
-import React from 'react';
-import {Header} from "./components/Header/Header";
-import {ProductsContainer} from "./components/ProductList/ProductsList";
-import {Sidebar} from "./components/Sidebar/Sidebar";
-import {Footer} from "./components/Footer/Footer";
+import {Routes, Route, Link} from 'react-router-dom';
+import {NotFound} from './pages/404'
+import {About} from './pages/About'
+import {Home} from './pages/Home'
+import {Products} from './pages/Products'
 import './App.css';
-import {CartItemsState} from "./context/CartItems";
+
 
 function App() {
   return (
-    <CartItemsState>
-      <div className='main-container'>
-        <div className='header'>
-          <Header />
-        </div>
-        <div className='filters'>
-          <Sidebar />
-        </div>
-        <div className='main-section'>
-          <ProductsContainer />
-        </div>
-        <div className='footer'>
-          <Footer />
-        </div>
-      </div>
-    </CartItemsState>
+    <Routes>
+      <Route path='/' element={<Home />}/>
+      <Route path='/products' element={<Products />}/>
+      <Route path='/about' element={<About />}/>
+      <Route path='*' element={<NotFound />}/>
+    </Routes>
   );
 }
 

@@ -4,7 +4,7 @@ import {ProductsProps} from "../hooks/products";
 
 interface CartItems {
   items: []
-  add: (product: {}) => void
+  add: (product: ProductsProps) => void
   remove: (id: number) => void
 }
 
@@ -27,12 +27,43 @@ export const CartItemsState = ({children}: {children:React.ReactNode}) => {
   let date = new Date();
   date.setTime(date.getTime() + (60*60*1000)); // +1 hour
 
-  const add = (product: {}) => {
+  const add = (product: ProductsProps) => {
     let currentList = typeof cookies.get('cartProducts') === 'undefined'
       ? []
       : cookies.get('cartProducts');
-    currentList.push(product);
 
+    delete product.description;
+    delete product.rating;
+    delete product.category;
+
+    let isNewProduct = true;
+    let existingProductIndex = 0;
+
+    if (currentList.length === 0) {
+      product.amount = 1;
+      currentList.push(product);
+    } else {
+      currentList.forEach((currentProduct: ProductsProps, index: number) => {
+        if (currentProduct.id === product.id) {
+
+          isNewProduct = false;
+          existingProductIndex = index;
+          // let amount = currentProduct.amount + 1;
+          // currentProduct.amount = amount;
+          // currentProduct.price = product.price * amount;
+
+        }
+      })
+
+      if (!isNewProduct) {
+        let amount = currentList[existingProductIndex].amount + 1;
+        currentList[existingProductIndex].amount = amount;
+        currentList[existingProductIndex].price = (product.price * amount);
+      } else {
+        product.amount = 1;
+        currentList.push(product);
+      }
+    }
 
     cookies.set('cartProducts', currentList, { path: '/', expires: date});
     setItems(currentList);
