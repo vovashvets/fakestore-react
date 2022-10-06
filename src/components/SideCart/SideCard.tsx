@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import './SideCard.css';
 import {CartItemsContext} from "../../context/CartItems";
 import {ProductsProps} from "../../hooks/products";
+import {Button} from "@mui/material";
 
 interface SideCardProps {
   handleClose: () => void
@@ -21,7 +22,9 @@ export function SideCard({ handleClose }: SideCardProps) {
 
   return (
     <div className='side-card'>
-      <button className='close-button' onClick={handleClose}>X</button>
+      <Button variant={"outlined"} className='close-button' onClick={handleClose}>
+        Close
+      </Button>
 
       {items.length !== 0
         ? (
@@ -50,7 +53,9 @@ export function SideCard({ handleClose }: SideCardProps) {
           </table>
 
           <div className='cart-total'><b>Total:</b> ${getTotal()}</div>
-          <button className='purchase-button'>Purchase</button>
+          <Button className='purchase-button' variant="contained">
+            Purchase
+          </Button>
         </>
       )
       : <h3>Empty Cart</h3> }

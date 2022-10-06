@@ -19,16 +19,15 @@ export function useProducts() {
   const [loading, setLoading] = useState<boolean>(true);
   const [products, setProducts] = useState<ProductsProps[]>([]);
 
-  // Set timeout to see how loader works.
   useEffect(() => {
+    // Set timeout to see how loader works.
     setTimeout(() => {
       const products = getFakeProducts();
-
       products.then(jsonResponse => {
         setLoading(false);
         setProducts(jsonResponse);
       })
-    }, 1000)
+    }, 500)
   }, []);
 
   return {products, loading}

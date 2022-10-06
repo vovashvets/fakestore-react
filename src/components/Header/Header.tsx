@@ -1,17 +1,18 @@
 import React from "react";
 import {Cart} from "../Cart/Cart";
 import './Header.css';
-import {Link} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 
 export function Header() {
   return (
     <header>
       <div className='main-nav'>
         <h3>
-          <Link to='/'>Fake store</Link>
+          {/*'end' - makes link active only on home page*/}
+          <NavLink to='/' end>Fake store</NavLink>
         </h3>
-        <Link to='/products'>Products</Link>
-        <Link to='/about'>About</Link>
+        <NavLink to='/products'>Products</NavLink>
+        <NavLink to='/about'>About</NavLink>
       </div>
       <Cart />
     </header>

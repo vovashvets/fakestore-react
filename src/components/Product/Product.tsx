@@ -2,6 +2,8 @@ import React, {useContext, useState} from "react";
 import {ProductsProps} from "../../hooks/products";
 import './Product.css';
 import {CartItemsContext} from "../../context/CartItems";
+import {Button, Divider, Paper} from "@mui/material";
+import {Link} from "react-router-dom";
 
 interface ProductProps {
   product: ProductsProps
@@ -13,8 +15,10 @@ export function Product(props: ProductProps) {
   const {add} = useContext(CartItemsContext);
 
   return (
-    <div className={'product'}>
-      <p>{props.product.title}</p>
+    <Paper className='product' elevation={3}>
+      <Link className='product-title' to={'/product/' + props.product.id}>
+        {props.product.title}
+      </Link>
       <div>
         <img className={'product-image'} src={props.product.image} alt={props.product.title}/>
       </div>
@@ -22,21 +26,22 @@ export function Product(props: ProductProps) {
         ${props.product.price}
       </div>
       <div>
-        <button
+        <Button
+          variant="outlined"
           className={buttonClasses.join(' ')}
           onClick={() => setShowDetails(prev => !prev)}
         >
           {showDetails ? 'Hide Description' : 'Show Description'}
-        </button>
-        <button className={'btn'} onClick={() => add(props.product)}>
+        </Button>
+        <Button variant="contained" onClick={() => add(props.product)}>
           Add To Card
-        </button>
+        </Button>
       </div>
       {showDetails &&
         <p className='product-description'>
           {props.product.description}
         </p>
       }
-    </div>
+    </Paper>
   )
 }

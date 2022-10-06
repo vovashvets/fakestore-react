@@ -15,6 +15,10 @@ a {
     color: #343434;
 }
 
+a.active {
+    color: #1976d2;
+}
+
 a:hover {
     text-decoration: underline;
 }
@@ -38,7 +42,7 @@ a:hover {
 
 .main-container{
     display: grid;
-    grid-template-columns: 1fr 5fr;
+    grid-template-columns: 1fr 6fr;
     grid-template-rows: auto;
     grid-template-areas:
     "header header"
@@ -46,7 +50,7 @@ a:hover {
     "footer footer";
 }
 
-.header {
+.header-container {
     grid-area: header;
 }
 

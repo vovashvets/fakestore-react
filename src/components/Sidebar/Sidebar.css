@@ -1,5 +1,8 @@
 .sidebar {
-    background-color: aliceblue;
+    background-color: #fbfbfb;
     box-shadow: 1px 1px 9px 0 #d1d1d1;
-    z-index: -1;
+}
+
+.sidebar-block {
+    padding: 0 25px;
 }

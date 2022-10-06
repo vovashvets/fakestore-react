@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import './Cart.css'
 import {SideCard} from "../SideCart/SideCard";
 import {CartItemsContext} from "../../context/CartItems";
+import {Button} from "@mui/material";
 
 export function Cart() {
   const [sideCart, setSideCart] = useState(false);
@@ -13,9 +14,9 @@ export function Cart() {
 
   return (
     <>
-      <div className={'cart'} onClick={clickHandler}>
+      <Button onClick={clickHandler} variant="outlined">
         Cart ({items.length})
-      </div>
+      </Button>
 
       {sideCart && <SideCard handleClose={clickHandler}/>}
     </>

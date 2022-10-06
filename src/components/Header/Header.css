@@ -1,12 +1,15 @@
 header {
-    z-index: 5;
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 30px;
     padding: 10px 30px;
-    background: beige;
+    background: #f3f3f3;
     box-shadow: 1px 1px 5px #d1d1d1;
+}
+
+.header-container {
+    z-index: 5;
 }
 
 .main-nav{

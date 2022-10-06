@@ -32,10 +32,10 @@ export const CartItemsState = ({children}: {children:React.ReactNode}) => {
       ? []
       : cookies.get('cartProducts');
 
-    delete product.description;
-    delete product.rating;
-    delete product.category;
-
+    // Remove unused data in order to pass more products in cookies.
+    // delete product.description;
+    // delete product.rating;
+    // delete product.category;
     let isNewProduct = true;
     let existingProductIndex = 0;
 
@@ -45,16 +45,10 @@ export const CartItemsState = ({children}: {children:React.ReactNode}) => {
     } else {
       currentList.forEach((currentProduct: ProductsProps, index: number) => {
         if (currentProduct.id === product.id) {
-
           isNewProduct = false;
           existingProductIndex = index;
-          // let amount = currentProduct.amount + 1;
-          // currentProduct.amount = amount;
-          // currentProduct.price = product.price * amount;
-
         }
       })
-
       if (!isNewProduct) {
         let amount = currentList[existingProductIndex].amount + 1;
         currentList[existingProductIndex].amount = amount;
@@ -64,7 +58,6 @@ export const CartItemsState = ({children}: {children:React.ReactNode}) => {
         currentList.push(product);
       }
     }
-
     cookies.set('cartProducts', currentList, { path: '/', expires: date});
     setItems(currentList);
   }
@@ -72,11 +65,9 @@ export const CartItemsState = ({children}: {children:React.ReactNode}) => {
   const remove = (id: number) => {
     let currentList = cookies.get('cartProducts');
     const arr = [{id: 1}, {id: 3}, {id: 5}];
-
     const newArr = currentList.filter((object: ProductsProps) => {
       return object.id !== id;
     });
-
     cookies.set('cartProducts', newArr, { path: '/', expires: date});
     setItems(newArr)
   }
