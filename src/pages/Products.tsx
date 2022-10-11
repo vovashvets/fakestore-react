@@ -1,8 +1,8 @@
 import React from 'react';
-import {ProductsContainer} from "../components/ProductList/ProductsList";
+import { ProductsList } from "../components/ProductList/ProductsList";
 
 export const Products = () => {
   return (
-    <ProductsContainer />
+    <ProductsList />
   );
 }

@@ -6,8 +6,9 @@ import {useEffect, useState} from "react";
 import {Link, useLocation} from "react-router-dom";
 import {ProductsProps} from "../../hooks/products";
 
-export function ProductsContainer() {
+export function ProductsList() {
   const location = useLocation(); // props.location in router v5
+  const queryParams = new URLSearchParams(location.search);
   const {products, loading} = useProducts();
   // Define data for search by title.
   const [searchString, setSearchString] = useState<string>('');
@@ -15,7 +16,7 @@ export function ProductsContainer() {
   // Define data for pager.
   const [currentPageNumber, setCurrentPageNumber] = useState<number>(
     // Set current page number from the url.
-    parseInt(location.search?.split('=')[1]) || 1
+    parseInt(queryParams.get('page') || '') || 1
   );
   const productsPerPage = 6;
   const lastProductIndex = currentPageNumber * productsPerPage;
