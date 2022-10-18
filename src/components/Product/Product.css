@@ -9,10 +9,7 @@
 .product-image {
     width: auto;
     height: 100px;
-}
-
-.product-title {
-    margin-bottom: 15px;
+    margin-top: 15px;
 }
 
 .product-description {

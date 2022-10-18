@@ -18,6 +18,7 @@ export interface ProductsProps {
 export function useProducts() {
   const [loading, setLoading] = useState<boolean>(true);
   const [products, setProducts] = useState<ProductsProps[]>([]);
+  const [minMaxPriceRange, setPriceRange] = useState<number[]>([]);
 
   useEffect(() => {
     // Set timeout to see how loader works.
@@ -26,9 +27,18 @@ export function useProducts() {
       products.then(jsonResponse => {
         setLoading(false);
         setProducts(jsonResponse);
+        setPriceRange(getMinMaxPrice(jsonResponse))
       })
     }, 500)
   }, []);
 
-  return {products, loading}
+  function getMinMaxPrice(products: ProductsProps[]) {
+    let prices = products.map((product) => {
+      return product.price
+    });
+
+    return [Math.min(...prices), Math.max(...prices)];
+  }
+
+  return {products, loading, minMaxPriceRange}
 }

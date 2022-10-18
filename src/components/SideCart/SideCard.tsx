@@ -9,7 +9,7 @@ interface SideCardProps {
 }
 
 export function SideCard({ handleClose }: SideCardProps) {
-  const {items, remove} = useContext(CartItemsContext);
+  const {items, remove, increaseDecrease} = useContext(CartItemsContext);
 
   function getTotal(){
     let total = 0;
@@ -17,7 +17,7 @@ export function SideCard({ handleClose }: SideCardProps) {
       total += product.price;
     })
 
-    return total.toFixed(2);
+    return total;
   }
 
   return (
@@ -44,7 +44,17 @@ export function SideCard({ handleClose }: SideCardProps) {
                 <td>{index + 1}</td>
                 <td><img className='cart-product-image' src={product.image} alt={product.title}/></td>
                 <td>{product.title}</td>
-                <td>x{product.amount}</td>
+                <td>
+                  <Button onClick={() => increaseDecrease(product.id, 'increase')}>
+                    +
+                  </Button>
+                  <div className='amount'>
+                    x{product.amount}
+                  </div>
+                  <Button onClick={() => increaseDecrease(product.id, 'decrease')}>
+                    -
+                  </Button>
+                </td>
                 <td>${product.price}</td>
                 <td><button className='remove-button' onClick={() => remove(product.id)}>Remove</button></td>
               </tr>

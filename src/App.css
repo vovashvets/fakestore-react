@@ -42,7 +42,7 @@ a:hover {
 
 .main-container{
     display: grid;
-    grid-template-columns: 1fr 6fr;
+    grid-template-columns: 1fr 5fr;
     grid-template-rows: auto;
     grid-template-areas:
     "header header"

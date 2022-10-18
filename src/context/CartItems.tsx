@@ -6,36 +6,27 @@ interface CartItems {
   items: []
   add: (product: ProductsProps) => void
   remove: (id: number) => void
+  increaseDecrease: (id: number, action: "increase" | "decrease") => void
 }
-
-// Get products from cookie or empty array in case of none cookie.
-const cookies = new Cookies();
-let currentList: [] = typeof cookies.get('cartProducts') === 'undefined'
-  ? []
-  : cookies.get('cartProducts');
 
 export const CartItemsContext = createContext<CartItems>({
   // Default value
   items: [],
   add: () => {}, // Just an empty function
   remove: () => {},
+  increaseDecrease: () => {},
 });
 
 export const CartItemsState = ({children}: {children:React.ReactNode}) => {
-  const [items, setItems] = useState<[]>(currentList);
   const cookies = new Cookies();
+  let currentList = typeof cookies.get('cartProducts') === 'undefined'
+    ? []
+    : cookies.get('cartProducts');
+  const [items, setItems] = useState<[]>(currentList);
   let date = new Date();
   date.setTime(date.getTime() + (60*60*1000)); // +1 hour
 
   const add = (product: ProductsProps) => {
-    let currentList = typeof cookies.get('cartProducts') === 'undefined'
-      ? []
-      : cookies.get('cartProducts');
-
-    // Remove unused data in order to pass more products in cookies.
-    // delete product.description;
-    // delete product.rating;
-    // delete product.category;
     let isNewProduct = true;
     let existingProductIndex = 0;
 
@@ -64,7 +55,6 @@ export const CartItemsState = ({children}: {children:React.ReactNode}) => {
 
   const remove = (id: number) => {
     let currentList = cookies.get('cartProducts');
-    const arr = [{id: 1}, {id: 3}, {id: 5}];
     const newArr = currentList.filter((object: ProductsProps) => {
       return object.id !== id;
     });
@@ -72,8 +62,36 @@ export const CartItemsState = ({children}: {children:React.ReactNode}) => {
     setItems(newArr)
   }
 
+  const increaseDecrease = (id: number, action: string) => {
+    currentList.forEach((currentProduct: ProductsProps, index: number) => {
+      if (currentProduct.id === id) {
+        let prevAmount = currentList[index].amount;
+        let amount = currentList[index].amount;
+        action === 'increase'
+          ? amount++
+          : amount > 1 && amount--;
+        currentList[index].amount = amount;
+
+        if (action === 'increase') {
+          currentList[index].price = roundToTwo(currentProduct.price + (currentProduct.price/(amount - 1)));
+        } else {
+          if (prevAmount !== 1) {
+            currentList[index].price = roundToTwo(currentProduct.price - (currentProduct.price/(amount + 1)));
+          }
+        }
+      }
+    })
+    cookies.set('cartProducts', currentList, { path: '/', expires: date});
+    setItems(currentList);
+  }
+
+  // Helper function that works better than toFixed(2) in current case.
+  function roundToTwo(num: number) {
+    return Math.round( num * 100 + Number.EPSILON ) / 100
+  }
+
   return (
-    <CartItemsContext.Provider value={{items, add, remove}}>
+    <CartItemsContext.Provider value={{items, add, remove, increaseDecrease}}>
       {children}
     </CartItemsContext.Provider>
   )

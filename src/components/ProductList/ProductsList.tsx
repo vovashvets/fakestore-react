@@ -1,10 +1,11 @@
 import {Product} from "../Product/Product";
 import {useProducts} from "../../hooks/products";
 import './ProductList.css';
-import {CircularProgress, Pagination, PaginationItem, TextField} from "@mui/material";
+import {Button, CircularProgress, Pagination, PaginationItem, TextField} from "@mui/material";
 import {useEffect, useState} from "react";
 import {Link, useLocation} from "react-router-dom";
 import {ProductsProps} from "../../hooks/products";
+import {firstSymbolCapitalize} from "../../utils/GlobalUtils";
 
 export function ProductsList() {
   const location = useLocation(); // props.location in router v5
@@ -12,6 +13,7 @@ export function ProductsList() {
   const {products, loading} = useProducts();
   // Define data for search by title.
   const [searchString, setSearchString] = useState<string>('');
+  const [search, setSearch] = useState<string>('');
   const [filteredProducts, setFilteredProducts] = useState<ProductsProps[]>([]);
   // Define data for pager.
   const [currentPageNumber, setCurrentPageNumber] = useState<number>(
@@ -27,10 +29,14 @@ export function ProductsList() {
     setSearchString(event.target.value);
   };
 
+  const handleSearch = (event: any) => {
+    setSearch(searchString);
+  };
+
   useEffect(() => {
     function productTitleFilter(product: ProductsProps) {
       if (product.title.includes(searchString)
-        || product.title.includes(searchString.charAt(0).toUpperCase() + searchString.slice(1))
+        || product.title.includes(firstSymbolCapitalize(searchString))
       ) {
         return product;
       } else {
@@ -44,7 +50,7 @@ export function ProductsList() {
     } else {
       setFilteredProducts(products);
     }
-  }, [searchString, products])
+  }, [search, products])
 
   return (
     <>
@@ -52,12 +58,21 @@ export function ProductsList() {
         ? <CircularProgress />
         : currentProducts ? (
           <>
-            <TextField
-              id="product-search"
-              label="Search"
-              variant="outlined"
-              onChange={handleSearchTextChange}
-            />
+            <div className="search-wrapper">
+              <TextField
+                id="search-input"
+                label="Search"
+                variant="outlined"
+                onChange={handleSearchTextChange}
+              />
+              <Button
+                id="search-submit"
+                variant="outlined"
+                onClick={handleSearch}
+              >
+                Search
+              </Button>
+            </div>
             <div className='product-container-title'>Products found: {filteredProducts?.length}</div>
             <div className='product-container'>
               {currentProducts.map(product =>
@@ -71,7 +86,7 @@ export function ProductsList() {
               variant="outlined"
               showFirstButton
               showLastButton
-              onChange={(_, num) => {setCurrentPageNumber(num)}}
+              onChange={(event, num) => {setCurrentPageNumber(num)}}
               renderItem={(item) => (
                 <PaginationItem
                   component={Link}

@@ -17,8 +17,15 @@ export function Product(props: ProductProps) {
   return (
     <Paper className='product' elevation={3}>
       <Link className='product-title' to={'/product/' + props.product.id}>
-        {props.product.title}
+        <b>{props.product.title}</b>
       </Link>
+      <Divider />
+      <div>
+        Category: {props.product.category}
+      </div>
+      <div>
+        Rating: {props.product.rating?.rate}
+      </div>
       <div>
         <img className={'product-image'} src={props.product.image} alt={props.product.title}/>
       </div>
