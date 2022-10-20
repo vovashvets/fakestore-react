@@ -1,14 +1,14 @@
 import {useEffect, useState} from "react";
-import {getFakeProducts} from "../api/fakestore/FakeStoreServise";
+import {getFakeCategories, getFakeProducts} from "../api/fakestore/FakeStoreServise";
 
 export interface ProductsProps {
   id: number
   title: string
   price: number
-  description?: string
-  category?: string
+  description: string
+  category: string
   image: string
-  rating?: {
+  rating: {
     rate: number
     count: number
   }
@@ -18,18 +18,19 @@ export interface ProductsProps {
 export function useProducts() {
   const [loading, setLoading] = useState<boolean>(true);
   const [products, setProducts] = useState<ProductsProps[]>([]);
+  const [categories, setCategories] = useState<[]>([]);
   const [minMaxPriceRange, setPriceRange] = useState<number[]>([]);
 
   useEffect(() => {
-    // Set timeout to see how loader works.
-    setTimeout(() => {
-      const products = getFakeProducts();
-      products.then(jsonResponse => {
-        setLoading(false);
-        setProducts(jsonResponse);
-        setPriceRange(getMinMaxPrice(jsonResponse))
-      })
-    }, 500)
+    getFakeProducts().then(jsonResponse => {
+      setLoading(false);
+      setProducts(jsonResponse);
+      setPriceRange(getMinMaxPrice(jsonResponse))
+    })
+
+    getFakeCategories().then((jsonResponse) => {
+      setCategories(jsonResponse);
+    })
   }, []);
 
   function getMinMaxPrice(products: ProductsProps[]) {
@@ -40,5 +41,5 @@ export function useProducts() {
     return [Math.min(...prices), Math.max(...prices)];
   }
 
-  return {products, loading, minMaxPriceRange}
+  return {products, categories, loading, minMaxPriceRange}
 }

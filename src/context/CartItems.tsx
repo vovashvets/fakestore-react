@@ -1,6 +1,7 @@
 import React, {createContext, useState} from "react";
 import Cookies from "universal-cookie";
 import {ProductsProps} from "../hooks/products";
+import {roundToTwo} from "../utils/GlobalUtils";
 
 interface CartItems {
   items: []
@@ -83,11 +84,6 @@ export const CartItemsState = ({children}: {children:React.ReactNode}) => {
     })
     cookies.set('cartProducts', currentList, { path: '/', expires: date});
     setItems(currentList);
-  }
-
-  // Helper function that works better than toFixed(2) in current case.
-  function roundToTwo(num: number) {
-    return Math.round( num * 100 + Number.EPSILON ) / 100
   }
 
   return (

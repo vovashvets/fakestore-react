@@ -3,6 +3,7 @@ import './SideCard.css';
 import {CartItemsContext} from "../../context/CartItems";
 import {ProductsProps} from "../../hooks/products";
 import {Button} from "@mui/material";
+import {roundToTwo} from "../../utils/GlobalUtils";
 
 interface SideCardProps {
   handleClose: () => void
@@ -17,7 +18,7 @@ export function SideCard({ handleClose }: SideCardProps) {
       total += product.price;
     })
 
-    return total;
+    return roundToTwo(total);
   }
 
   return (

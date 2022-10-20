@@ -6,17 +6,24 @@ import {Products} from './pages/Products'
 import './App.css';
 import {ProductPage} from "./pages/ProductPage";
 import React from "react";
+import {Header} from "./components/Header/Header";
+import {Footer} from "./components/Footer/Footer";
+import {CartItemsState} from "./context/CartItems";
 
 
 export function App() {
   return (
-    <Routes>
-      <Route path='/' element={<Home />}>
-        <Route path='products' element={<Products />}/>
-        <Route path='product/:id' element={<ProductPage />} />
-        <Route path='about' element={<About />}/>
-        <Route path='*' element={<NotFound />}/>
-      </Route>
-    </Routes>
+    <CartItemsState>
+      <Header />
+        <Routes>
+          <Route path='/' element={<Home />}>
+            <Route path='products' element={<Products />}/>
+            <Route path='product/:id' element={<ProductPage />} />
+            <Route path='about' element={<About />}/>
+            <Route path='*' element={<NotFound />}/>
+          </Route>
+        </Routes>
+      <Footer />
+    </CartItemsState>
   );
 }

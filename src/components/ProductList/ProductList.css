@@ -1,7 +1,7 @@
 .product-container {
     display: grid;
     grid-template: 1fr 1fr  / 1fr 1fr 1fr;
-    padding: 30px;
+    padding: 50px;
     grid-gap: 30px;
 }
 
