@@ -1,12 +1,9 @@
-import {CartItemsState} from "../context/CartItems";
-import {Header} from "../components/Header/Header";
-import {Sidebar} from "../components/Sidebar/Sidebar";
-import {Footer} from "../components/Footer/Footer";
 import React from "react";
+import {Container} from "@mui/material";
 
 export const About = () => {
   return (
-    <>
+    <Container>
       <h2>About</h2>
       <p>
         Pellentesque in ipsum id orci porta dapibus. Cras ultricies ligula sed magna dictum porta.
@@ -30,6 +27,6 @@ export const About = () => {
         Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
         Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.
       </p>
-    </>
+    </Container>
   )
 }

@@ -1,10 +1,28 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, {ChangeEvent, useContext, useEffect, useState} from 'react';
 import { ProductsList } from "../components/ProductList/ProductsList";
 import { Sidebar } from "../components/Sidebar/Sidebar";
 import { ProductsFilter } from "../components/ProductsFilter/ProductsFilter";
 import {ProductsProps, useProducts} from "../hooks/products";
-import {Button, TextField} from "@mui/material";
+import {Button, TextField, Snackbar, Alert} from "@mui/material";
 import {firstSymbolCapitalize} from "../utils/GlobalUtils";
+import {CartItemsContext} from "../context/CartItems";
+import styled from "styled-components";
+
+const StyledProducts = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  
+  .MuiCircularProgress-root {
+    margin-left: 35vw;
+    margin-top: 35vh;
+  }
+
+  .MuiPagination-root {
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+  }
+`
 
 export const Products = () => {
   const {products, loading} = useProducts();
@@ -14,6 +32,7 @@ export const Products = () => {
   // Define data for filters.
   const [priceRange, setPriceRange] = useState<number | number[]>([0, 0]);
   const [selectedCategories, setSelectedCategories] = useState<Map<string, boolean>>(new Map());
+  const {snackbar, handleSnackbarClose} = useContext(CartItemsContext);
 
   useEffect(() => {
     setFilteredProducts(products);
@@ -73,10 +92,11 @@ export const Products = () => {
     setSelectedCategories(new Map())
     setPriceRange([0, 0])
     setFilteredProducts(products);
+    setSearchString('');
   }
 
   return (
-    <div className='product-page-container'>
+    <StyledProducts>
       <Sidebar>
         <ProductsFilter
           handleFilters={handleFilters}
@@ -97,6 +117,7 @@ export const Products = () => {
             label="Search"
             variant="outlined"
             onChange={handleSearchTextChange}
+            value={searchString}
           />
           <Button
             id="search-submit"
@@ -107,6 +128,17 @@ export const Products = () => {
           </Button>
         </div>
       </ProductsList>
-    </div>
+      <Snackbar
+        open={snackbar}
+        autoHideDuration={1500}
+        onClose={handleSnackbarClose}
+      >
+        <Alert
+          severity="success"
+        >
+          The product has been added to the cart
+        </Alert>
+      </Snackbar>
+    </StyledProducts>
   );
 }

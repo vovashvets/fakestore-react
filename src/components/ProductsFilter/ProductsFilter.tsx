@@ -1,6 +1,5 @@
 import React, {ChangeEvent} from "react";
 import {Button, Checkbox, FormControlLabel, FormGroup, Slider} from "@mui/material";
-import './ProductsFilter.css';
 import {firstSymbolCapitalize} from "../../utils/GlobalUtils";
 import {useProducts} from "../../hooks/products";
 

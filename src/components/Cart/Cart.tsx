@@ -1,5 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
-import './Cart.css'
+import React, {useContext, useState} from "react";
 import {SideCard} from "../SideCart/SideCard";
 import {CartItemsContext} from "../../context/CartItems";
 import {Button} from "@mui/material";

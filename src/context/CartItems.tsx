@@ -4,10 +4,12 @@ import {ProductsProps} from "../hooks/products";
 import {roundToTwo} from "../utils/GlobalUtils";
 
 interface CartItems {
-  items: []
+  items: ProductsProps[]
   add: (product: ProductsProps) => void
   remove: (id: number) => void
   increaseDecrease: (id: number, action: "increase" | "decrease") => void
+  snackbar: boolean
+  handleSnackbarClose: () => void
 }
 
 export const CartItemsContext = createContext<CartItems>({
@@ -16,6 +18,8 @@ export const CartItemsContext = createContext<CartItems>({
   add: () => {}, // Just an empty function
   remove: () => {},
   increaseDecrease: () => {},
+  snackbar: false,
+  handleSnackbarClose:() => {},
 });
 
 export const CartItemsState = ({children}: {children:React.ReactNode}) => {
@@ -23,11 +27,17 @@ export const CartItemsState = ({children}: {children:React.ReactNode}) => {
   let currentList = typeof cookies.get('cartProducts') === 'undefined'
     ? []
     : cookies.get('cartProducts');
-  const [items, setItems] = useState<[]>(currentList);
+  const [items, setItems] = useState<ProductsProps[]>(currentList);
   let date = new Date();
   date.setTime(date.getTime() + (60*60*1000)); // +1 hour
+  const [snackbar, setSnackbar] = useState(false);
+
+  function handleSnackbarClose() {
+    setSnackbar(false);
+  }
 
   const add = (product: ProductsProps) => {
+    setSnackbar(true);
     let isNewProduct = true;
     let existingProductIndex = 0;
 
@@ -51,7 +61,8 @@ export const CartItemsState = ({children}: {children:React.ReactNode}) => {
       }
     }
     cookies.set('cartProducts', currentList, { path: '/', expires: date});
-    setItems(currentList);
+
+    setItems([...currentList]);
   }
 
   const remove = (id: number) => {
@@ -87,7 +98,7 @@ export const CartItemsState = ({children}: {children:React.ReactNode}) => {
   }
 
   return (
-    <CartItemsContext.Provider value={{items, add, remove, increaseDecrease}}>
+    <CartItemsContext.Provider value={{items, add, remove, increaseDecrease, snackbar, handleSnackbarClose}}>
       {children}
     </CartItemsContext.Provider>
   )

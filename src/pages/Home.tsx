@@ -1,11 +1,12 @@
 import React from 'react';
 import {Outlet, useOutlet} from "react-router";
+import {Container} from "@mui/material";
 
 export const Home = () => {
   const outlet = useOutlet();
 
   return outlet ? <Outlet/> : (
-    <>
+    <Container>
       <h2>Home page</h2>
       <p>
         Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.
@@ -48,6 +49,6 @@ export const Home = () => {
         Quisque velit nisi, pretium ut lacinia in, elementum id enim. Sed porttitor lectus nibh.
         Cras ultricies ligula sed magna dictum porta.
       </p>
-    </>
+    </Container>
   );
 }
