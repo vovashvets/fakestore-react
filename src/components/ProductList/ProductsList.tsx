@@ -2,8 +2,9 @@ import {Product} from "../Product/Product";
 import { CircularProgress, Pagination, PaginationItem } from "@mui/material";
 import { ProductsProps } from "../../hooks/products";
 import { Link, useLocation } from "react-router-dom";
-import React, {ReactNode, useEffect, useRef, useState} from "react";
+import React, {ReactNode, Ref, RefObject, useEffect, useState} from "react";
 import styled from "styled-components";
+import {AnyRecordWithTtl} from "dns";
 
 const StyledProductList = styled.div`
   .product-container {
@@ -33,6 +34,7 @@ interface ProductsListProps {
   products: ProductsProps[]
   loading: boolean
   children: ReactNode
+  searchRef: RefObject<HTMLInputElement>
 }
 
 export function ProductsList(props: ProductsListProps) {
@@ -48,16 +50,15 @@ export function ProductsList(props: ProductsListProps) {
   const lastProductIndex = currentPageNumber * productsPerPage;
   const firstProductIndex = lastProductIndex - productsPerPage;
   const currentProducts = props.products.slice(firstProductIndex, lastProductIndex);
-  const divRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    divRef?.current?.scrollIntoView({ behavior: 'smooth' });
+    props.searchRef?.current?.scrollIntoView({ behavior: 'smooth' });
   }, [currentPageNumber]);
 
   return (
     <StyledProductList className='products-list-container'>
       {props.children /* Search input */}
-      <div ref={divRef} className='product-container-title'>Products found: {props.products.length}</div>
+      <div className='product-container-title'>Products found: {props.products.length}</div>
       <div className='product-container'>
         {
           props.loading ? <CircularProgress />

@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useContext, useEffect, useState} from 'react';
+import React, {ChangeEvent, RefObject, useContext, useEffect, useRef, useState} from 'react';
 import { ProductsList } from "../components/ProductList/ProductsList";
 import { Sidebar } from "../components/Sidebar/Sidebar";
 import { ProductsFilter } from "../components/ProductsFilter/ProductsFilter";
@@ -33,6 +33,7 @@ export const Products = () => {
   const [priceRange, setPriceRange] = useState<number | number[]>([0, 0]);
   const [selectedCategories, setSelectedCategories] = useState<Map<string, boolean>>(new Map());
   const {snackbar, handleSnackbarClose} = useContext(CartItemsContext);
+  const searchRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setFilteredProducts(products);
@@ -110,6 +111,7 @@ export const Products = () => {
       <ProductsList
         products={filteredProducts}
         loading={loading}
+        searchRef={searchRef}
       >
         <div className="search-wrapper">
           <TextField
@@ -118,6 +120,7 @@ export const Products = () => {
             variant="outlined"
             onChange={handleSearchTextChange}
             value={searchString}
+            ref={searchRef}
           />
           <Button
             id="search-submit"
