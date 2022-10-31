@@ -123,7 +123,7 @@ export const Products = () => {
             ref={searchRef}
           />
           <Button
-            id="search-submit"
+            name="search-submit"
             variant="outlined"
             onClick={() => handleFilters()}
           >
