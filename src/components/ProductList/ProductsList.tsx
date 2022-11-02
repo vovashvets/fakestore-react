@@ -2,9 +2,8 @@ import {Product} from "../Product/Product";
 import { CircularProgress, Pagination, PaginationItem } from "@mui/material";
 import { ProductsProps } from "../../hooks/products";
 import { Link, useLocation } from "react-router-dom";
-import React, {ReactNode, Ref, RefObject, useEffect, useState} from "react";
+import React, {ReactNode, RefObject, useEffect, useState} from "react";
 import styled from "styled-components";
-import {AnyRecordWithTtl} from "dns";
 
 const StyledProductList = styled.div`
   .product-container {
