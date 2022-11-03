@@ -1,13 +1,13 @@
-import React, {createContext, useState} from "react";
-import Cookies from "universal-cookie";
-import {ProductsProps} from "../hooks/products";
-import {roundToTwo} from "../utils/GlobalUtils";
+import React, { createContext, useState } from 'react';
+import Cookies from 'universal-cookie';
+import { ProductsProps } from '../hooks/products';
+import { roundToTwo } from '../utils/GlobalUtils';
 
 interface CartItems {
   items: ProductsProps[]
   add: (product: ProductsProps) => void
   remove: (id: number) => void
-  increaseDecrease: (id: number, action: "increase" | "decrease") => void
+  increaseDecrease: (id: number, action: 'increase' | 'decrease') => void
   snackbar: boolean
   handleSnackbarClose: () => void
 }
@@ -19,17 +19,17 @@ export const CartItemsContext = createContext<CartItems>({
   remove: () => {},
   increaseDecrease: () => {},
   snackbar: false,
-  handleSnackbarClose:() => {},
+  handleSnackbarClose: () => {}
 });
 
-export const CartItemsState = ({children}: {children:React.ReactNode}) => {
+export const CartItemsState = ({ children }: { children: React.ReactNode }) => {
   const cookies = new Cookies();
-  let currentList = typeof cookies.get('cartProducts') === 'undefined'
+  const currentList = typeof cookies.get('cartProducts') === 'undefined'
     ? []
     : cookies.get('cartProducts');
   const [items, setItems] = useState<ProductsProps[]>(currentList);
-  let date = new Date();
-  date.setTime(date.getTime() + (60*60*1000)); // +1 hour
+  const date = new Date();
+  date.setTime(date.getTime() + (60 * 60 * 1000)); // +1 hour
   const [snackbar, setSnackbar] = useState(false);
 
   function handleSnackbarClose() {
@@ -50,9 +50,9 @@ export const CartItemsState = ({children}: {children:React.ReactNode}) => {
           isNewProduct = false;
           existingProductIndex = index;
         }
-      })
+      });
       if (!isNewProduct) {
-        let amount = currentList[existingProductIndex].amount + 1;
+        const amount = currentList[existingProductIndex].amount + 1;
         currentList[existingProductIndex].amount = amount;
         currentList[existingProductIndex].price = (product.price * amount);
       } else {
@@ -60,24 +60,24 @@ export const CartItemsState = ({children}: {children:React.ReactNode}) => {
         currentList.push(product);
       }
     }
-    cookies.set('cartProducts', currentList, { path: '/', expires: date});
+    cookies.set('cartProducts', currentList, { path: '/', expires: date });
 
     setItems([...currentList]);
-  }
+  };
 
   const remove = (id: number) => {
-    let currentList = cookies.get('cartProducts');
+    const currentList = cookies.get('cartProducts');
     const newArr = currentList.filter((object: ProductsProps) => {
       return object.id !== id;
     });
-    cookies.set('cartProducts', newArr, { path: '/', expires: date});
-    setItems(newArr)
-  }
+    cookies.set('cartProducts', newArr, { path: '/', expires: date });
+    setItems(newArr);
+  };
 
   const increaseDecrease = (id: number, action: string) => {
     currentList.forEach((currentProduct: ProductsProps, index: number) => {
       if (currentProduct.id === id) {
-        let prevAmount = currentList[index].amount;
+        const prevAmount = currentList[index].amount;
         let amount = currentList[index].amount;
         action === 'increase'
           ? amount++
@@ -85,21 +85,21 @@ export const CartItemsState = ({children}: {children:React.ReactNode}) => {
         currentList[index].amount = amount;
 
         if (action === 'increase') {
-          currentList[index].price = roundToTwo(currentProduct.price + (currentProduct.price/(amount - 1)));
+          currentList[index].price = roundToTwo(currentProduct.price + (currentProduct.price / (amount - 1)));
         } else {
           if (prevAmount !== 1) {
-            currentList[index].price = roundToTwo(currentProduct.price - (currentProduct.price/(amount + 1)));
+            currentList[index].price = roundToTwo(currentProduct.price - (currentProduct.price / (amount + 1)));
           }
         }
       }
-    })
-    cookies.set('cartProducts', currentList, { path: '/', expires: date});
+    });
+    cookies.set('cartProducts', currentList, { path: '/', expires: date });
     setItems(currentList);
-  }
+  };
 
   return (
-    <CartItemsContext.Provider value={{items, add, remove, increaseDecrease, snackbar, handleSnackbarClose}}>
+    <CartItemsContext.Provider value={{ items, add, remove, increaseDecrease, snackbar, handleSnackbarClose }}>
       {children}
     </CartItemsContext.Provider>
-  )
-}
+  );
+};

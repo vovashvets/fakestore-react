@@ -1,7 +1,7 @@
-import React, {ChangeEvent} from "react";
-import {Button, Checkbox, FormControlLabel, FormGroup, Slider} from "@mui/material";
-import {firstSymbolCapitalize} from "../../utils/GlobalUtils";
-import {useProducts} from "../../hooks/products";
+import React, { ChangeEvent } from 'react';
+import { Button, Checkbox, FormControlLabel, FormGroup, Slider } from '@mui/material';
+import { firstSymbolCapitalize } from '../../utils/GlobalUtils';
+import { useProducts } from '../../hooks/products';
 
 interface ProductsFilterProps {
   priceRange: number | number[]
@@ -13,7 +13,7 @@ interface ProductsFilterProps {
 }
 
 export const ProductsFilter = (props: ProductsFilterProps) => {
-  const {categories, minMaxPriceRange} = useProducts();
+  const { categories, minMaxPriceRange } = useProducts();
 
   return (
     <>
@@ -55,5 +55,5 @@ export const ProductsFilter = (props: ProductsFilterProps) => {
         Reset
       </Button>
     </>
-  )
-}
+  );
+};

@@ -1,7 +1,7 @@
-import React from "react";
-import {Cart} from "../Cart/Cart";
-import {NavLink} from "react-router-dom";
-import styled from "styled-components";
+import React from 'react';
+import { Cart } from '../Cart/Cart';
+import { NavLink } from 'react-router-dom';
+import styled from 'styled-components';
 
 const StyledHeader = styled.header`
   position: relative;
@@ -18,14 +18,14 @@ const StyledHeader = styled.header`
     align-items: baseline;
     gap: 25px;
   }
-`
+`;
 
 export function Header() {
   return (
     <StyledHeader>
       <div className='main-nav'>
         <h3>
-          {/*'end' - makes link active only on home page*/}
+          {/* 'end' - makes link active only on home page */}
           <NavLink to='/' end>Fake store</NavLink>
         </h3>
         <NavLink to='/products'>Products</NavLink>
@@ -33,5 +33,5 @@ export function Header() {
       </div>
       <Cart />
     </StyledHeader>
-  )
+  );
 }

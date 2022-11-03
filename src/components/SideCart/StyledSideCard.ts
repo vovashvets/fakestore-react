@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const StyledSideCard = styled.div`
   display: flex;
@@ -80,4 +80,4 @@ export const StyledSideCard = styled.div`
     display: flex;
     justify-content: center;
   }
-`
+`;

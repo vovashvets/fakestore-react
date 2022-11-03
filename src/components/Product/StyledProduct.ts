@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const StyledProduct = styled.div`
   .product {
@@ -40,4 +40,4 @@ export const StyledProduct = styled.div`
   .product-main-image {
     max-width: 350px;
   }
-`
+`;

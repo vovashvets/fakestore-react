@@ -1,6 +1,6 @@
-import {API_ENDPOINT_CATEGORIES, API_ENDPOINT_PRODUCTS, DEFAULT_PRODUCTS_AMOUNT, API_ENDPOINT_PRODUCT} from "../../config";
+import { API_ENDPOINT_CATEGORIES, API_ENDPOINT_PRODUCTS, DEFAULT_PRODUCTS_AMOUNT, API_ENDPOINT_PRODUCT } from '../../config';
 
-export function getFakeProducts(number: number = 0) {
+export async function getFakeProducts(number: number = 0) {
   let url = API_ENDPOINT_PRODUCTS;
 
   if (number === 0) {
@@ -10,44 +10,44 @@ export function getFakeProducts(number: number = 0) {
   }
 
   return (
-    fetch(url)
-      .then(response => {
-        if(response.ok) {
-          return response.json();
+    await fetch(url)
+      .then(async response => {
+        if (response.ok) {
+          return await response.json();
         }
         throw new Error('Request failed!');
       }, networkError => {
         console.log(networkError.message);
       })
-  )
+  );
 }
 
 export function getFakeProduct(id: number) {
   if (id !== 0) {
     return (
       fetch(API_ENDPOINT_PRODUCT + id)
-        .then(response => {
-          if(response.ok) {
-            return response.json();
+        .then(async response => {
+          if (response.ok) {
+            return await response.json();
           }
           throw new Error('Request failed!');
         }, networkError => {
           console.log(networkError.message);
         })
-    )
+    );
   }
 }
 
-export function getFakeCategories() {
+export async function getFakeCategories() {
   return (
-    fetch(API_ENDPOINT_CATEGORIES)
-      .then(response => {
-        if(response.ok) {
-          return response.json();
+    await fetch(API_ENDPOINT_CATEGORIES)
+      .then(async response => {
+        if (response.ok) {
+          return await response.json();
         }
         throw new Error('Request failed!');
       }, networkError => {
         console.log(networkError.message);
       })
-  )
+  );
 }

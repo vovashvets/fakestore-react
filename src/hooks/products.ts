@@ -1,5 +1,5 @@
-import {useEffect, useState} from "react";
-import {getFakeCategories, getFakeProducts} from "../api/fakestore/FakeStoreServise";
+import { useEffect, useState } from 'react';
+import { getFakeCategories, getFakeProducts } from '../api/fakestore/FakeStoreServise';
 
 export interface ProductsProps {
   id: number
@@ -25,21 +25,21 @@ export function useProducts() {
     getFakeProducts().then(jsonResponse => {
       setLoading(false);
       setProducts(jsonResponse);
-      setPriceRange(getMinMaxPrice(jsonResponse))
-    })
+      setPriceRange(getMinMaxPrice(jsonResponse));
+    });
 
     getFakeCategories().then((jsonResponse) => {
       setCategories(jsonResponse);
-    })
+    });
   }, []);
 
   function getMinMaxPrice(products: ProductsProps[]) {
-    let prices = products.map((product) => {
-      return product.price
+    const prices = products.map((product) => {
+      return product.price;
     });
 
     return [Math.min(...prices), Math.max(...prices)];
   }
 
-  return {products, categories, loading, minMaxPriceRange}
+  return { products, categories, loading, minMaxPriceRange };
 }

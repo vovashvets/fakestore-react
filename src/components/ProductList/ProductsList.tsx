@@ -1,9 +1,9 @@
-import {Product} from "../Product/Product";
-import { CircularProgress, Pagination, PaginationItem } from "@mui/material";
-import { ProductsProps } from "../../hooks/products";
-import { Link, useLocation } from "react-router-dom";
-import React, {ReactNode, RefObject, useEffect, useState} from "react";
-import styled from "styled-components";
+import { Product } from '../Product/Product';
+import { CircularProgress, Pagination, PaginationItem } from '@mui/material';
+import { ProductsProps } from '../../hooks/products';
+import { Link, useLocation } from 'react-router-dom';
+import React, { ReactNode, RefObject, useEffect, useState } from 'react';
+import styled from 'styled-components';
 
 const StyledProductList = styled.div`
   .product-container {
@@ -27,7 +27,7 @@ const StyledProductList = styled.div`
     width: 40%;
     margin-right: 10px;
   }
-`
+`;
 
 interface ProductsListProps {
   products: ProductsProps[]
@@ -43,7 +43,7 @@ export function ProductsList(props: ProductsListProps) {
   // Define data for pager.
   const [currentPageNumber, setCurrentPageNumber] = useState<number>(
     // Set current page number from the url.
-    parseInt(queryParams.get('page') || '') || 1
+    parseInt(queryParams.get('page') ?? '') || 1
   );
   const productsPerPage = 9;
   const lastProductIndex = currentPageNumber * productsPerPage;
@@ -60,15 +60,17 @@ export function ProductsList(props: ProductsListProps) {
       <div className='product-container-title'>Products found: {props.products.length}</div>
       <div className='product-container'>
         {
-          props.loading ? <CircularProgress />
-            : props.products ? (
-                currentProducts.map((product: ProductsProps) => (
-                  <Product
-                    product={product}
-                    key={product.id}
-                  />
-                ))
-              )
+          props.loading
+            ? <CircularProgress />
+            : props.products
+              ? (
+                  currentProducts.map((product: ProductsProps) => (
+                    <Product
+                      product={product}
+                      key={product.id}
+                    />
+                  ))
+                )
               : (<div>No items</div>)
         }
       </div>
@@ -79,15 +81,15 @@ export function ProductsList(props: ProductsListProps) {
         variant="outlined"
         showFirstButton
         showLastButton
-        onChange={(event, num) => {setCurrentPageNumber(num)}}
+        onChange={(event, num) => { setCurrentPageNumber(num); }}
         renderItem={(item) => (
           <PaginationItem
             component={Link}
-            to={`/products?page=${item.page}`}
+            to={`/products?page=${item.page ?? 1}`}
             {...item}
           />
         )}
       />
     </StyledProductList>
-  )
+  );
 }

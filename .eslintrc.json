@@ -1,0 +1,28 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "standard-with-typescript"
+    ],
+    "overrides": [
+    ],
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module",
+        "project": ["tsconfig.json"]
+    },
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+        "@typescript-eslint/explicit-function-return-type": "off", // Allows to use function without return
+        "@typescript-eslint/strict-boolean-expressions": 0, // Allows to use conditional statements like "if (someData)" intead of "if (someData === true)"
+        "@typescript-eslint/restrict-plus-operands": 0, // Allows to use concatenation like "url += number"
+        "@typescript-eslint/space-before-function-paren": ["error", "never"], // Delete space between function and ()
+        "@typescript-eslint/semi": [2, "always"], // Always requires semicolons at the end of statements
+        "@typescript-eslint/no-floating-promises": 0
+    }
+}

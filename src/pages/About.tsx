@@ -1,5 +1,5 @@
-import React from "react";
-import {Container} from "@mui/material";
+import React from 'react';
+import { Container } from '@mui/material';
 
 export const About = () => {
   return (
@@ -28,5 +28,5 @@ export const About = () => {
         Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.
       </p>
     </Container>
-  )
-}
+  );
+};

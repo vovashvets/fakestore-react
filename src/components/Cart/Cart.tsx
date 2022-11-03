@@ -1,15 +1,15 @@
-import React, {useContext, useState} from "react";
-import {SideCard} from "../SideCart/SideCard";
-import {CartItemsContext} from "../../context/CartItems";
-import {Button} from "@mui/material";
+import React, { useContext, useState } from 'react';
+import { SideCard } from '../SideCart/SideCard';
+import { CartItemsContext } from '../../context/CartItems';
+import { Button } from '@mui/material';
 
 export function Cart() {
   const [sideCart, setSideCart] = useState(false);
-  const {items} = useContext(CartItemsContext);
+  const { items } = useContext(CartItemsContext);
 
   const clickHandler = () => {
-    setSideCart(prev => !prev)
-  }
+    setSideCart(prev => !prev);
+  };
 
   return (
     <>
@@ -19,5 +19,5 @@ export function Cart() {
 
       {sideCart && <SideCard handleClose={clickHandler}/>}
     </>
-  )
+  );
 }

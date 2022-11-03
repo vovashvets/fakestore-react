@@ -1,14 +1,14 @@
-import {Routes, Route} from 'react-router-dom';
-import {NotFound} from './pages/404'
-import {About} from './pages/About'
-import {Home} from './pages/Home'
-import {Products} from './pages/Products'
-import {ProductPage} from "./pages/ProductPage";
-import React from "react";
-import {Header} from "./components/Header/Header";
-import {Footer} from "./components/Footer/Footer";
-import {CartItemsState} from "./context/CartItems";
-import styled from "styled-components";
+import { Routes, Route } from 'react-router-dom';
+import { NotFound } from './pages/404';
+import { About } from './pages/About';
+import { Home } from './pages/Home';
+import { Products } from './pages/Products';
+import { ProductPage } from './pages/ProductPage';
+import React from 'react';
+import { Header } from './components/Header/Header';
+import { Footer } from './components/Footer/Footer';
+import { CartItemsState } from './context/CartItems';
+import styled from 'styled-components';
 
 const StyledApp = styled.div`
   a {
@@ -23,7 +23,7 @@ const StyledApp = styled.div`
   a:hover {
     text-decoration: underline;
   }
-`
+`;
 
 export function App() {
   return (

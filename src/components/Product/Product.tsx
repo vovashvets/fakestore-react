@@ -1,18 +1,18 @@
-import React, {useContext, useState} from "react";
-import {ProductsProps} from "../../hooks/products";
-import {CartItemsContext} from "../../context/CartItems";
-import {Button, Divider, Paper} from "@mui/material";
-import {Link} from "react-router-dom";
-import {StyledProduct} from "./StyledProduct";
+import React, { useContext, useState } from 'react';
+import { ProductsProps } from '../../hooks/products';
+import { CartItemsContext } from '../../context/CartItems';
+import { Button, Divider, Paper } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { StyledProduct } from './StyledProduct';
 
 interface ProductProps {
   product: ProductsProps
 }
 
 export function Product(props: ProductProps) {
-  const [showDetails, setShowDetails] = useState(false)
+  const [showDetails, setShowDetails] = useState(false);
   const buttonClasses = ['btn', showDetails ? 'active' : 'disactive'];
-  const {add} = useContext(CartItemsContext);
+  const { add } = useContext(CartItemsContext);
 
   return (
     <StyledProduct>
@@ -52,5 +52,5 @@ export function Product(props: ProductProps) {
         }
       </Paper>
     </StyledProduct>
-  )
+  );
 }
